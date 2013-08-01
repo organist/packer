@@ -1,0 +1,3 @@
+class samba::params {
+
+}

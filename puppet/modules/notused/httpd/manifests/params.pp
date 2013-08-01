@@ -1,0 +1,3 @@
+class httpd::params {
+	
+}

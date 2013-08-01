@@ -1,0 +1,122 @@
+#!/usr/bin/php -q
+<?php
+	$host_suffix = trim(`hostname -f`);
+	
+	// Loopt alle homedirs na
+	foreach (glob('/home/*', GLOB_ONLYDIR) as $home) {
+		$username = basename($home);
+		// Loopt alle vhosts na in de homedir
+		foreach (array_merge(
+		    glob($home.'/vhosts/*', GLOB_ONLYDIR)
+		) as $basedir) {
+			if($username=='tester'){
+				// This will be the global test account (not bound to specific devver within Netvlies)
+				$vhost = basename($basedir).$host_suffix;
+			}
+			else{
+				$vhost = basename($basedir).'.'.$host_suffix;
+			}
+
+			if(file_exists($basedir.'/current/web')){
+				// For capistrano deployments
+				$basedir.='/current/web';				
+			}
+			else if(file_exists($basedir.'/current')){
+				// For capifony deployments
+				$basedir.='/current';
+			}
+			else if(file_exists($basedir.'/web')){
+				// For default symfony projects
+				$basedir.='/web';
+			}
+			
+			// Checkt of de host valide is
+			preg_match('#[^a-z0-9\.\-]#i', $vhost, $matches);
+			if (count($matches) > 0) {
+				echo "\033[1mSkipping invalid hostname '".$vhost."'...\033[0m\n";
+				continue;
+			}
+			
+			$conf_path = '/etc/httpd/sites.d/'.$vhost.'.conf';
+			$conf_pathSSL = '/etc/httpd/sslsites.d/'.$vhost.'.conf';
+
+			if (file_exists($conf_path)) {
+				echo "Updating ".$vhost."...\n";
+			} else {
+				echo "Detected new ".$vhost."...\n";
+			}
+			$textfile  = "<VirtualHost *:80>\n";
+			$textfile .= "\tServerAdmin beheer@netvlies.nl\n";
+			$textfile .= "\tDocumentRoot ".$basedir."/\n";
+			$textfile .= "\tServerName ".$vhost."\n";
+			if (file_exists($basedir.'/aliases.txt')) {
+				$aliases = preg_split('/[\s]{1,99}/', trim(file_get_contents($basedir.'/aliases.txt')));
+				foreach ($aliases as &$alias) {
+					$alias .= '.' . $vhost; 
+				}
+				echo "  (with aliases: ".implode(', ', $aliases).")\n";
+				$textfile .= "\tServerAlias ".implode(' ', $aliases)."\n";
+			}
+			$textfile .= "\tErrorLog /home/".$username."/logs/error.log\n";
+			$textfile .= "\tTransferLog /home/".$username."/logs/transfer.log\n";
+			$textfile .= "\t<Directory ".$basedir.">\n";
+			$textfile .= "\t\tAllowOverride All\n";
+			$textfile .= "\t\tphp_admin_flag xdebug.profiler_enable_trigger 1\n";
+			$textfile .= "\t\tphp_admin_value xdebug.profiler_output_dir \"/home/".$username."/xdebug/\n";
+			$textfile .= "\t\tphp_admin_value xdebug.trace_output_dir \"/home/".$username."/xdebug/\n";
+			$textfile .= "\t</Directory>\n";
+			$textfile .= "</VirtualHost>\n";
+			file_put_contents($conf_path, $textfile);
+
+			if(!file_exists('/etc/pki/tls/certs/'.$vhost.'.crt')){
+
+				// Default create SSL certificate as well
+				exec("sudo openssl genrsa -out /etc/pki/tls/private/$vhost.key 1024");
+				exec("sudo openssl req -new -key /etc/pki/tls/private/$vhost.key -x509 -out /etc/pki/tls/certs/$vhost.crt -days 999 -subj '/C=NL/ST=NB/L=Breda/CN=$vhost'");
+
+				$textfile = "<VirtualHost 33.33.33.10:443>\n";
+				$textfile.= "\tServerAdmin beheer@netvlies.nl\n";
+	        	$textfile.= "\tDocumentRoot $basedir\n";
+				$textfile.= "\tServerName $vhost\n";
+				$textfile.= "\t<Directory $basedir>\n";
+				$textfile.= "\t\tAllowOverride All\n";
+				$textfile.= "\t</Directory>\n";
+		        $textfile.= "\tSSLEngine On\n";
+				$textfile.= "\tSSLCertificateFile /etc/pki/tls/certs/$vhost.crt\n";
+				$textfile.= "\tSSLCertificateKeyFile /etc/pki/tls/private/$vhost.key\n";
+				$textfile.= "\t</VirtualHost>\n";
+				file_put_contents($conf_pathSSL, $textfile);
+			}
+
+		}
+	}
+	
+	// Loopt bestaande configs na
+	// @todo not 100% covering, removing should be done by reading directory paths from the vhostfile withing, not by its filename
+	foreach (glob('/etc/httpd/sites.d/*.conf') as $config) if (basename($config) != '_default_virtualhost.conf') {
+		continue;
+		$vhost = substr(basename($config), 0, -5);
+		$vhost = substr($vhost, 0, 0 - strlen($host_suffix));
+		
+		if(strpos($vhost, '.')===false){
+			// Not bound to a user, so assume user `tester`
+			$homedir = 'tester';
+			$path = $vhost;
+		}
+		else{
+			$homedir = substr($vhost, strrpos($vhost, '.') + 1);
+			$path = substr($vhost, 0, -1 - strlen($homedir));
+		}
+
+		// Checkt of deze nog bestaat
+		if (
+		    !is_dir('/home/'.$homedir.'/vhosts/'.$path)
+		) {
+			echo "Removing ".$vhost.$host_suffix."...\n";
+			unlink($config);
+		}
+	}
+	system(sprintf('/usr/sbin/netvlies/update_dns.sh %s 33.33.33.10', escapeshellarg('*.'. $host_suffix)));
+	system(sprintf('/usr/sbin/netvlies/update_dns.sh %s 33.33.33.10', $host_suffix));
+	system('/sbin/service httpd restart');
+?>

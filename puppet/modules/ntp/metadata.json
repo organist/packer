@@ -1,0 +1,43 @@
+{
+  "name": "puppetlabs-ntp",
+  "version": "0.3.0",
+  "summary": "NTP Module",
+  "author": "Puppet Labs",
+  "description": "NTP Module for Debian, Ubuntu, CentOS, RHEL, OEL, Fedora, FreeBSD \u0026 Arch",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": "\u003e\u003d 0.1.6"
+    }
+  ],
+  "types": [],
+  "checksums": {
+    ".fixtures.yml": "909729694bab62c1e36001512b68a8fd",
+    ".travis.yml": "19fc250a5a63326a4fe363ccfdf1642c",
+    "CHANGELOG": "7cd76ce1a5385b76e7e495c08c25bc60",
+    "CONTRIBUTING.md": "2ef1d6f4417dde9af6c7f46f5c8a864b",
+    "Gemfile": "e87c237ce1d9c2a91e439b8b6d5535a9",
+    "Gemfile.lock": "143d9ef6be7f9588fd95e7858a2b2b89",
+    "LICENSE": "2a944942e1496af1886903d274dedb13",
+    "Modulefile": "b393197a02aab0de1b14b7b6483400a4",
+    "README.markdown": "33445c8b060f888a560259ba8e1f7f91",
+    "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
+    "files/README.markdown": "3d44458cc68d8513b51e3b56c604eec4",
+    "manifests/init.pp": "dff0eb6482ad651ab9d0a4c7d9265b0f",
+    "spec/classes/ntp_spec.rb": "ce058b000498a6b3e0377664945aa956",
+    "spec/fixtures/modules/my_ntp/templates/ntp.conf.erb": "566e373728e9b13eda516115ff0a9fb0",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+    "spec/unit/puppet/provider/README.markdown": "e52668944ee6af2fb5d5b9e798342645",
+    "spec/unit/puppet/type/README.markdown": "de26a7643813abd6c2e7e28071b1ef94",
+    "templates/ntp.conf.archlinux.erb": "9a212a49f8e72a88958f5cb63c6264d7",
+    "templates/ntp.conf.debian.erb": "7893edf6ccf3035175a3085229f2b12a",
+    "templates/ntp.conf.el.erb": "2712fee0f14953334742248e9bae10e0",
+    "templates/ntp.conf.freebsd.erb": "e0ba259811925c114a3398044b735d07",
+    "templates/ntp.conf.suse.erb": "3026669e6e960d0d1af88d1b07fbc544",
+    "tests/init.pp": "d398e7687ec1d893ef23d1b7d2afc094"
+  },
+  "source": "git://github.com/puppetlabs/puppetlabs-ntp",
+  "project_page": "http://github.com/puppetlabs/puppetlabs-ntp",
+  "license": "Apache Version 2.0"
+}
