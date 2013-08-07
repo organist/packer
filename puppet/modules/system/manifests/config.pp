@@ -42,11 +42,12 @@ class system::config{
         require => User['deploy']
     }
 
-    host {'self':
-        ensure       => present,
-        name         => $fqdn,
-        host_aliases => ['puppet', $hostname],
-        ip           => $ipaddress_eth1,
-    }
+    # @todo needs to be modified to localhost or something like that instead of IP
+    #host {'self':
+    #    ensure       => present,
+    #    name         => $fqdn,
+    #    host_aliases => ['puppet', $hostname],
+    #    ip           => $ipaddress_eth1,
+    #}
 
 }
