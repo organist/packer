@@ -1,2 +1,5 @@
 /packer_cache
 /output-virtualbox
+/output-vmware
+/puppet/puppet.tar.gz
+/.idea
