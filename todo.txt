@@ -1,20 +1,8 @@
-package
 
-hotfix:  /usr/lib/ruby/gems/1.8/gems/capifony-2.2.8/lib/symfony2/deploy.rb
-even better capifony 2.2.9 instead of 2.2.8
-
-xdebug
-git clone organist
-app/cache app/logs setfacl
-  $ sudo setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
-  $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-composer.phar install
-config file parameters.yml
-install anyterm service
+xdebug voor develop
+remove netvlies (ook uit git) (move to readme.md)
 
 
-vmware record in packer
-
-sudo !requiretty instellen
-capifony sorry you must have tty to run sudo
-anyterm/build.sh sorry you must have a tty
+for open source:
+copy nvspublish to organist on github
+add trusted host vi akeys for github

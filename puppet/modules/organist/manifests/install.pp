@@ -11,15 +11,13 @@ class organist::install {
         notify => Service["nginx"]
 	}
 
-
     file { "/etc/nginx/conf.d/default.conf":
 		ensure => absent,
 	}
 
-
-	exec { 'sudo gem install capifony --version "=2.2.8"':
+	exec { 'sudo gem install capifony --version "=2.2.9"':
 	    path   => "/usr/bin:/usr/sbin:/bin",
-        creates => "/usr/lib/ruby/gems/1.8/specifications/capifony-2.2.8.gemspec"
+        creates => "/usr/lib/ruby/gems/1.8/specifications/capifony-2.2.9.gemspec"
 	}
 
 	exec { 'sudo gem install capistrano --version "=2.15.4"':
@@ -35,6 +33,13 @@ class organist::install {
 	exec { 'sudo gem install capistrano-ext	--version "=1.2.1"':
 	    path   => "/usr/bin:/usr/sbin:/bin",
         creates => "/usr/lib/ruby/gems/1.8/specifications/capistrano-ext-1.2.1.gemspec"
+    }
+
+    exec { "/home/deploy/install.sh":
+        provider => shell,
+        path => "/usr/bin:/usr/sbin:/bin",
+        creates => "/home/deploy/organist",
+        user => deploy
     }
 
     # Anyterm port

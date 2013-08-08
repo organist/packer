@@ -34,20 +34,29 @@ class system::config{
         require => User['deploy']
     }
 
-    # Needed before nginx is installed
-    file { [ "/home/deploy/organist/", "/home/deploy/organist/log" ]:
+    file { "/home/deploy/.ssh":
+        ensure => "directory",
+        owner => 'deploy',
+        group => 'deploy',
+        mode => 0700,
+        require => User['deploy']
+    }
+
+	file { "/home/deploy/.ssh/config":
+		ensure => present,
+		owner => 'deploy',
+		group => 'deploy',
+		mode => 0600,
+		source => "puppet:///modules/system/config",
+		require => File["/home/deploy/.ssh"]
+	}
+
+
+    file { [ "/home/deploy/nginx", "/home/deploy/nginx/log" ]:
         ensure => "directory",
         owner => 'deploy',
         group => 'deploy',
         require => User['deploy']
     }
-
-    # @todo needs to be modified to localhost or something like that instead of IP
-    #host {'self':
-    #    ensure       => present,
-    #    name         => $fqdn,
-    #    host_aliases => ['puppet', $hostname],
-    #    ip           => $ipaddress_eth1,
-    #}
 
 }

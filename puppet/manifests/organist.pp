@@ -1,12 +1,12 @@
 
 node 'organist' {
 
-    stage { 'first':
+    stage { 'setup-repos':
         before => Stage['main'],
     }
 
     class { 'system':
-        stage => first,
+        stage => setup-repos,
     }
 
     class { 'ntp':
@@ -47,10 +47,7 @@ node 'organist' {
         action => accept
     }
 
-    # This may come in handy during development, not required for organist to function
+    # Not required for Organist, but can be quite usefull
     class { 'samba': }
-
-    # Netvlies specific config
-    class { 'netvlies': }
 
 }

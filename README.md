@@ -6,4 +6,10 @@ After it is finishes doing command under 3, you can import your box into vbox / 
 You may want to to adjust network settings to make your box available troughout the network
 You also may want to adjust the root password (=vagrant), and the password for vagrant (=vagrant)
 
+4. Install your keys
 
+
+
+
+voor Netvlies extra
+sudo gem install capifony --version "=2.1.5"
