@@ -49,10 +49,10 @@ Setup
    In here you probably want to add a private and public key that is installed in authorized_keys in any account on any remote system you want to deploy to
    Optionally you also may want to add a private and public key for your repository you want to deploy from. If present, this key will be forwarded during deployment
    to the target system so you can access your git account. This way the target machine remains clean of any key.
-7. Login to your host with user "deploy". Go to its home and run install1.sh. This will clone the organist app and will set some symfony defaults
+7. Login to your host with user "deploy". Go to its home and run install_organist.sh. This will clone the organist app and will set some symfony defaults
 8. Depending on your preferences and credentials set in step 5, you'll need to configure the organist application (see README.md of organist)
-9. Run install2.sh under user deploy. This will install vendors and creates a database
-10. Run install3.sh under user vagrant. This will install the anyterm service on your system
+9. Run install_vendors.sh under user deploy. This will install vendors and creates a database
+10. Run install_anytermservice.sh under user vagrant. This will install the anyterm service on your system
 11. Last but not least, you may want to set a DNS name to your host for easy access in your internal network.
 12. Presto! you're done. Go to your previously set DNS in your browser
 
