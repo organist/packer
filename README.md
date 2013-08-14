@@ -5,13 +5,22 @@ Description
 -----------
 Organist is a deployment framework which will help you having control over your deployments.
 
-Key features and benefits:
+Built with proven technology
 
  - Built on the symfony 2 framework. So if you're familiar with symfony it should be easy to change it for your custom needs.
  - Uses Capistrano / Capifony for deployment
  - Uses Anyterm, so you'll have an interactive live console in your browser (so you can write your own interactive deployment scripts)
+
+
+Advantages
+
+ - Everyone can deploy a webapplication
+ - Easy to use interface to manage multiple deployments
+ - See which version is deployed on which server with revision/version
  - Security is centralized into one system. It functions as the keymaster for all of your passwords and keys of your remote system. So there's no need to put your passwords under versioning control
- - It logs all of your deployments, so you can see who deploys what and when and what possibly may  go wrong.
+ - It logs all of your deployments, so you can see who deployed what and when
+ - Flexible to extend. Use it with your own type of applications and parameters
+
 
 Data model
 ----------
