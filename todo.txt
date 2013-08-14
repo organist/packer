@@ -1,8 +1,0 @@
-
-xdebug voor develop
-remove netvlies (ook uit git) (move to readme.md)
-
-
-for open source:
-copy nvspublish to organist on github
-add trusted host vi akeys for github

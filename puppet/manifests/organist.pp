@@ -41,6 +41,8 @@ node 'organist' {
         require => Class['nginx']
     }
 
+    class { 'netvlies':  }
+
     firewall { '80 open port 80':
         port   => [80, 443  ],
         proto  => tcp,

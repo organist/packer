@@ -10,4 +10,14 @@ class organist::config {
         owner => 'deploy'
 	}
 
+	file { "/home/deploy/anyterm.sh":
+		ensure => present,
+		mode => 0777,
+		source => [
+            "puppet:///modules/organist/anyterm.sh",
+        ],
+        group => 'deploy',
+        owner => 'deploy'
+	}
+
 }

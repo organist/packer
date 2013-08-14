@@ -35,12 +35,14 @@ class organist::install {
         creates => "/usr/lib/ruby/gems/1.8/specifications/capistrano-ext-1.2.1.gemspec"
     }
 
-    exec { "/home/deploy/install.sh":
-        provider => shell,
-        path => "/usr/bin:/usr/sbin:/bin",
-        creates => "/home/deploy/organist",
-        user => deploy
-    }
+#    Cant be done due to private repo
+#    exec { "/home/deploy/install.sh":
+#        provider => shell,
+#        path => "/usr/bin:/usr/sbin:/bin",
+#        creates => "/home/deploy/organist/vendor",
+#        user => deploy
+#    }
+
 
     # Anyterm port
     firewall { '7778 open port 7778':

@@ -1,5 +1,4 @@
 Host bitbucket.org
-    IdentityFile ~/.ssh/id_rsa_bitbucket
     StrictHostKeyChecking no
-Host *
-    IdentityFile ~/.ssh/id_rsa_deploy
+Host github.com
+    StrictHostKeyChecking no
