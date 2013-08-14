@@ -34,7 +34,7 @@ Setup
 
 1. Install packer http://www.packer.io/
 2. Install VirtualBox and/or VMWare Desktop. Depending of which format you want to export
-3. Open up a console and run "packer build packer.json"
+3. Open up a console and run your desired config (either ./build_virtualbox.sh or ./build_vmware.sh)
 4. After it is finishes, you can import your box into vbox / esx / vmware workstation / ..
 5. For security reasons you may want to change the following
    - system user root has password vagrant

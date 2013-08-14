@@ -15,9 +15,9 @@ class organist::install {
 		ensure => absent,
 	}
 
-	exec { 'sudo gem install capifony --version "=2.2.9"':
+	exec { 'sudo gem install capifony --version "=2.2.10"':
 	    path   => "/usr/bin:/usr/sbin:/bin",
-        creates => "/usr/lib/ruby/gems/1.8/specifications/capifony-2.2.9.gemspec"
+        creates => "/usr/lib/ruby/gems/1.8/specifications/capifony-2.2.10.gemspec"
 	}
 
 	exec { 'sudo gem install capistrano --version "=2.15.4"':
