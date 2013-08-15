@@ -3,5 +3,7 @@ sudo touch /etc/puppet/hiera.yaml
 
 # Apply puppet config
 cd /home/vagrant
-tar -zxf puppet.tar.gz
+git clone git@github.com:organist/puppet.git
+cd puppet
+git checkout master
 sudo puppet apply /home/vagrant/puppet/manifests/organist.pp --modulepath=/home/vagrant/puppet/modules

@@ -35,21 +35,9 @@ This is a little scheme, which explains the data model that is being administere
  - Target is the combination of application and environment. This will typically contain the account name, some path settings and db credentials of the target.
  - Log; for each executed action of a target a log will be saved
 
-## Setup ##
+# Setup #
 We use [packer](http://www.packer.io/) to create a Virtual Guest OS for either [VirtualBox](https://www.virtualbox.org/) or [VMWare Desktop](http://www.vmware.com/).
-The Guest OS that is created for you has the following specs:
-
-- CentOS 6.4
-- Kernel blah blah blah
-
-Installing the various software packages is done with [Puppet](https://puppetlabs.com/).
-Packages that are currently installed include:
-
-- Nginx
-- Samba
-- Anyterm
-
-The complete puppet manifests can be found [here](some_other_git_repo)
+We use CentOS 6.4 (64-bit) as guest OS and use puppet for provisioning. The complete puppet manifests can be found [here](https://github.com/organist/puppet)
 
 ## Install packer ##
 Download the files for your OS from  [http://www.packer.io](http://www.packer.io/) and follow the installation instructions
@@ -61,48 +49,45 @@ Depending on which format you want to export.
 ## Create the environment ##
 clone the git repository
 
-    git clone git@bitbucket.org:netvlies/packer-organist.git
-    cd packer-organist
+    git@github.com:organist/packer.git
+    cd packer
 
 ### execute the packer script ###
 
 for VirtualBox execute the command:
 
-    packer build build_virtualbox.sh
+    packer build virtualbox.json
 
 When you want to use VMware use:
 
-    packer build build_vmware.sh
+    packer build vmware.json
+
+
+### Install Organist ###
 
 Packer will now create a complete working image for you.
 When the script is finished you will have a new .vmdk (Virtual Machine Disk) file which you can import into your virtualization software of choice.
 After you imported and started the created image.
-login as `root` with the password `vagrant` and change to the deploy user:
+login as `root` with the password `vagrant` and change to the deploy user to setup organist:
 
-    sudo su deploy
+    sudo su deploy --shell=/bin/bash
     cd ~/
+    ./install_organist.sh
 
-### Install Organist ###
-By running the following commands you will setup the Organist application:
+You will probably want to change some configuration read more about it in the [Organist repo](https://github.com/organist/organist)
+After configuration is done, finish installation by installing vendors trough:
 
-    install_organist.sh
+    ./install_vendors.sh
 
-You will need to add some configuration read more about it in the Organist [README](some_place)
-To install vendors and creates a database you can run the command:
+Logout as deploy to run following command as vagrant. This will install the anyterm service on your system
 
-    install_vendors.sh
-
-Now run the command
-
-    install_anytermservice.sh
-
-As user vagrant. To install the anyterm service on your system.
+    ./install_anytermservice.sh
 
 Last but not least, you may want to set a DNS name to your host for easy access in your internal network.
 Presto! you're done. Go to your previously set DNS in your browser and start deploying.
 
 ## Security ##
-By default a number of accounts are created for security reasons you may want to change them:
+By default a number of accounts with default passwords for automation are created. For security reasons you may want to change them:
 
    - system user root has password vagrant
    - system user vagrant has password vagrant
@@ -110,7 +95,7 @@ By default a number of accounts are created for security reasons you may want to
    - mysql user vagrant has password vagrant
    - samba user deploy has password deploy
    - samba user vagrant has password vagrant
-   - firewall is enabled, and opens up port 80, 443, 137, 138, 139 and 7778. For HTTP, Samba and Anyterm
+   - firewall is enabled, and opens up port 80, 443, 137, 138, 139 and 7778. (For HTTP, Samba and Anyterm)
    - selinux is disabled
 
 ## Setting up your SSH keys ##
