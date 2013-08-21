@@ -104,6 +104,11 @@ You may want to add ssh keys to the "deploy" account. Nginx and anyterm are runn
    Optionally you also may want to add a private and public key for your repository you want to deploy from. If present, this key will be forwarded during deployment
    to the target system so you can access your git account. This way the target machine remains clean of any key.
 
+
+## License ##
+The packers scripts to build the Organist box is licensed under the MIT licence. View the LICENSE file
+
+
 Todo´s
 ------
 

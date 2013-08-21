@@ -35,11 +35,6 @@
     ],
     "provisioners": [
         {
-            "type": "file",
-            "source": "puppet/puppet.tar.gz",
-            "destination": "/home/vagrant/puppet.tar.gz"
-        },
-        {
             "type": "shell",
             "scripts": [
                 "scripts/virtualbox.sh",
