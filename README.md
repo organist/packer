@@ -63,28 +63,27 @@ When you want to use VMware use:
     packer build vmware.json
 
 
-### Install Organist ###
 
-Packer will now create a complete working image for you.
-When the script is finished you will have a new .vmdk (Virtual Machine Disk) file which you can import into your virtualization software of choice.
-After you imported and started the created image.
-login as `root` with the password `vagrant` and change to the deploy user to setup organist:
+### Import appliance ###
 
-    sudo su deploy --shell=/bin/bash
-    cd ~/
-    ./install_organist.sh
+## puppet ##
+If (for some reason) puppet fails because of a failed dependency due to network lag or what so ever. You can try to re-run the puppet provisioning by running following
+command in your box.
+
+    sudo puppet apply /home/vagrant/puppet/manifests/organist.pp --modulepath=/home/vagrant/puppet/modules
+
+
+## network ##
+Now you need to import your freshly built box into your virtualisation software. During import you may want to adapt your network settings depending on your needs
+(network adapter configuration is already cleared during the packer build, so is is network independant). In Virtualbox we experienced some issues with network
+setting that are not working with our internal DHCP server. After the NIC was set to "bridged" it started working.
+
+
+### Configure Organist ###
 
 You will probably want to change some configuration read more about it in the [Organist repo](https://github.com/organist/organist)
-After configuration is done, finish installation by installing vendors trough:
+Also, you may want to set a DNS name to your host for easy access in your internal network.
 
-    ./install_vendors.sh
-
-Logout as deploy to run following command as vagrant. This will install the anyterm service on your system
-
-    ./install_anytermservice.sh
-
-Last but not least, you may want to set a DNS name to your host for easy access in your internal network.
-Presto! you're done. Go to your previously set DNS in your browser and start deploying.
 
 ## Security ##
 By default a number of accounts with default passwords for automation are created. For security reasons you may want to change them:
@@ -105,13 +104,18 @@ You may want to add ssh keys to the "deploy" account. Nginx and anyterm are runn
    to the target system so you can access your git account. This way the target machine remains clean of any key.
 
 
+Presto! you're done. Go to your previously set DNS in your browser and start deploying.
+
+
 ## License ##
-The packers scripts to build the Organist box is licensed under the MIT licence. View the LICENSE file
+The packer scripts to build the Organist box is licensed under the MIT licence. View the LICENSE file
 
 
-Todo´s
-------
+### Todo´s ###
 
  - Enable XDebug for more easy development
- - Add more flexible parameter setup, which can be forwarded to capistrano. So add parameter set-types within settings (e.g. mysql, tomcat, mongodb). So the target edit form is dynamically extended (dependeing on the selected parameter sets)
- - Change layout to a twitter bootstrap
+ - Add more flexible parameter setup, which can be forwarded to capistrano. So add parameter set-types within settings (e.g. mysql, tomcat, mongodb).
+   So the target edit form is dynamically extended (depending on the selected parameter sets)
+ - Add a cron-like system (like gearman) for automated deployments (nightly builds)
+ - Change layout to twitter bootstrap
+ - Register your feature requests into the issues tab
