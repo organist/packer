@@ -10,6 +10,7 @@ Organist is a deployment framework which will help you control your deployments.
  - Uses Anyterm, so you'll have an interactive live console in your browser (so you can write your own interactive deployment scripts)
  - Security is centralized into one system. It functions as the keymaster for all of the passwords and keys of your remote systems. So there's no need to have your passwords in your version control repositories.
  - It logs all of your deployments, so you can see who deploys what, when and what possibly may have gone wrong.
+ - Built on Twitter bootstrap. You can initiate deployments from your mobile ;-)
 
 ### Advantages ###
 
@@ -117,5 +118,4 @@ The packer scripts to build the Organist box is licensed under the MIT licence. 
  - Add more flexible parameter setup, which can be forwarded to capistrano. So add parameter set-types within settings (e.g. mysql, tomcat, mongodb).
    So the target edit form is dynamically extended (depending on the selected parameter sets)
  - Add a cron-like system (like gearman) for automated deployments (nightly builds)
- - Change layout to twitter bootstrap
  - Register your feature requests into the issues tab
