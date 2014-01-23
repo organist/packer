@@ -1,3 +1,5 @@
+Organist is an open source tool which helps you manage and execute deployments. It's built on top of Symfony2 and Capistrano/Capifony. [More @ http://organist.github.io](http://organist.github.io)
+
 # Organist Setup #
 We use [packer](http://www.packer.io/) to create a Virtual Guest OS for either [VirtualBox](https://www.virtualbox.org/) or [VMWare Desktop](http://www.vmware.com/).
 We use CentOS 6.4 (64-bit) as guest OS and use puppet for provisioning. The complete puppet manifests can be found [here](https://github.com/organist/puppet)
